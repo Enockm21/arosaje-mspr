@@ -8,6 +8,8 @@ Pour lancer l'application utiliser la commande `docker-compose up -d`
 Pour voir l'application `symfony` aller sur http://localhost:8081 
 
 Pour gérer la base de données `phpmyadmin` http://localhost:8080
+
+
 Pour voir l'application `react` http://localhost:3000
 
 
