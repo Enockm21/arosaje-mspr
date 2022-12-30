@@ -3,12 +3,18 @@
 Prérequis:
 Assurer d'avoir installer docker et docker compose sur votre machine.
 
+Je vous conseille d'utiliser votre VM debian pour bien utiliser l'app
+
+Connectez votre compte gitlab avec compte gitlab 
+
+cloner le repo https://gitlab.com/enock18/arosaje-mspr.git
+
 Pour lancer l'application utiliser la commande `docker-compose up -d`
 
 Pour voir l'application `symfony` aller sur http://localhost:8081 
 
 Pour gérer la base de données `phpmyadmin` http://localhost:8080
-
+pour vous connecter mettez root à l'identifiant et rien pour password ensuite cliquez sur connexion
 
 Pour voir l'application `react` http://localhost:3000
 
