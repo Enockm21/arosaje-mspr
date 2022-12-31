@@ -5,7 +5,7 @@ Assurer d'avoir installer docker et docker compose sur votre machine.
 
 Je vous conseille d'utiliser votre VM debian pour bien utiliser l'app
 
-Connectez votre compte gitlab avec compte gitlab 
+Connectez votre compte github avec compte gitlab ou creer un compte gitlab
 
 cloner le repo https://gitlab.com/enock18/arosaje-mspr.git
 
