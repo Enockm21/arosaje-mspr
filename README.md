@@ -1,4 +1,5 @@
-# Projet back symfony 
+# Projet arosaje 
+front react et back symfony 
 
 Prérequis:
 Assurer d'avoir installer docker et docker compose sur votre machine.
