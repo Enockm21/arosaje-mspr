@@ -9,7 +9,8 @@ Je vous conseille d'utiliser votre VM debian pour bien utiliser l'app
 Connectez votre compte github avec compte gitlab ou creer un compte gitlab
 
 cloner le repo https://gitlab.com/enock18/arosaje-mspr.git
-
+aller sur app-front sur votre terminal `npm install`
+aller app-front fait `composer install`
 Pour lancer l'application utiliser la commande `docker-compose up -d`
 
 Pour voir l'application `symfony` aller sur http://localhost:8081 
@@ -17,7 +18,7 @@ Pour voir l'application `symfony` aller sur http://localhost:8081
 Pour gérer la base de données `phpmyadmin` http://localhost:8080
 pour vous connecter mettez root à l'identifiant et rien pour password ensuite cliquez sur connexion
 
-Pour voir l'application `react` http://localhost:3000
+Pour voir https://github.com/Enockm21/arosaje-mspr.gitl'application `react` http://localhost:3000
 
 
 
