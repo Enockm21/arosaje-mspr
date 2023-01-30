@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -48,6 +50,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Plantes::class, mappedBy="user_id", orphanRemoval=true)
+     */
+    private $plantes;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Plantes::class, mappedBy="plant_caretaker_user")
+     */
+    private $plante_kept;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Advices::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $advices;
+
+    public function __construct()
+    {
+        $this->plantes = new ArrayCollection();
+        $this->plante_kept = new ArrayCollection();
+        $this->advices = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -173,4 +197,94 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     // {
     //     return $this->roles;
     // }
+
+    /**
+     * @return Collection<int, Plantes>
+     */
+    public function getPlantes(): Collection
+    {
+        return $this->plantes;
+    }
+
+    public function addPlante(Plantes $plante): self
+    {
+        if (!$this->plantes->contains($plante)) {
+            $this->plantes[] = $plante;
+            $plante->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlante(Plantes $plante): self
+    {
+        if ($this->plantes->removeElement($plante)) {
+            // set the owning side to null (unless already changed)
+            if ($plante->getUserId() === $this) {
+                $plante->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Plantes>
+     */
+    public function getPlanteKept(): Collection
+    {
+        return $this->plante_kept;
+    }
+
+    public function addPlanteKept(Plantes $planteKept): self
+    {
+        if (!$this->plante_kept->contains($planteKept)) {
+            $this->plante_kept[] = $planteKept;
+            $planteKept->setPlantCaretakerUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlanteKept(Plantes $planteKept): self
+    {
+        if ($this->plante_kept->removeElement($planteKept)) {
+            // set the owning side to null (unless already changed)
+            if ($planteKept->getPlantCaretakerUser() === $this) {
+                $planteKept->setPlantCaretakerUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Advices>
+     */
+    public function getAdvices(): Collection
+    {
+        return $this->advices;
+    }
+
+    public function addAdvice(Advices $advice): self
+    {
+        if (!$this->advices->contains($advice)) {
+            $this->advices[] = $advice;
+            $advice->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdvice(Advices $advice): self
+    {
+        if ($this->advices->removeElement($advice)) {
+            // set the owning side to null (unless already changed)
+            if ($advice->getUser() === $this) {
+                $advice->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 }
