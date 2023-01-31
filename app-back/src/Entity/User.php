@@ -9,9 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
+
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
@@ -210,7 +212,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->plantes->contains($plante)) {
             $this->plantes[] = $plante;
-            $plante->setUserId($this);
+            $plante->setUser($this);
         }
 
         return $this;
@@ -220,8 +222,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->plantes->removeElement($plante)) {
             // set the owning side to null (unless already changed)
-            if ($plante->getUserId() === $this) {
-                $plante->setUserId(null);
+            if ($plante->getUser() === $this) {
+                $plante->setUser(null);
             }
         }
 
