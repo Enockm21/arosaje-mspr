@@ -70,11 +70,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $advices;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Chat::class, mappedBy="sender", orphanRemoval=true)
+     */
+    private $sender;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Chat::class, mappedBy="recipient", orphanRemoval=true)
+     */
+    private $recipient;
+
     public function __construct()
     {
         $this->plantes = new ArrayCollection();
         $this->plante_kept = new ArrayCollection();
         $this->advices = new ArrayCollection();
+        $this->sender = new ArrayCollection();
+        $this->recipient = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -286,6 +298,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($advice->getUser() === $this) {
                 $advice->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chat>
+     */
+    public function getSender(): Collection
+    {
+        return $this->sender;
+    }
+
+    public function addSender(Chat $sender): self
+    {
+        if (!$this->sender->contains($sender)) {
+            $this->sender[] = $sender;
+            $sender->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSender(Chat $sender): self
+    {
+        if ($this->sender->removeElement($sender)) {
+            // set the owning side to null (unless already changed)
+            if ($sender->getSender() === $this) {
+                $sender->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chat>
+     */
+    public function getRecipient(): Collection
+    {
+        return $this->recipient;
+    }
+
+    public function addRecipient(Chat $recipient): self
+    {
+        if (!$this->recipient->contains($recipient)) {
+            $this->recipient[] = $recipient;
+            $recipient->setRecipient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipient(Chat $recipient): self
+    {
+        if ($this->recipient->removeElement($recipient)) {
+            // set the owning side to null (unless already changed)
+            if ($recipient->getRecipient() === $this) {
+                $recipient->setRecipient(null);
             }
         }
 
