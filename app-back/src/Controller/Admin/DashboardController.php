@@ -6,6 +6,7 @@ use App\Entity\Plantes;
 use App\Controller\Admin\UserCrudController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Controller\Admin\PlantesCrudController;
+use App\Entity\Advices;
 use App\Entity\User;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -54,8 +55,16 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::subMenu('Actions')
             ->setSubItems([
-                MenuItem::linkToCrud('Voir les conseils', 'fas fa-eye', Plantes::class),
-                MenuItem::linkToCrud('Add Plantes', 'fas fa-plus', Plantes::class)
+                MenuItem::linkToCrud('Voir les conseils', 'fas fa-eye', Advices::class),
+                MenuItem::linkToCrud('Add Plantes', 'fas fa-plus', Advices::class)
+                    ->setAction(Crud::PAGE_NEW),
+            ]);
+        yield MenuItem::section('Users');
+
+        yield MenuItem::subMenu('Actions')
+            ->setSubItems([
+                MenuItem::linkToCrud('Voir les utilisateurs', 'fas fa-eye', User::class),
+                MenuItem::linkToCrud('Add Plantes', 'fas fa-plus', User::class)
                     ->setAction(Crud::PAGE_NEW),
             ]);
     }
