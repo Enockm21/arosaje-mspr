@@ -33,3 +33,6 @@ créer le fichier de migration
 php bin/console make:migration 
 générer les tables dans la base de donées
 php bin/console doctrine:migrations:migrate  
+
+Lien pour le thème
+https://www.creative-tim.com/product/argon-dashboard-react?ref=adr-documentation-header#
