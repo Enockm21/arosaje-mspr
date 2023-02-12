@@ -43,6 +43,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
+    /**
+     * @ORM\Column(type="string", length=500, unique=false)
+     */
+    private $adress;
 
     /**
      * @ORM\Column(type="json")
@@ -111,7 +115,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->pseudo;
     }
-
+    public function getAdress():?string
+    {
+    return $this->adress;
+    }
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -136,8 +143,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-
+    
+    public function setAdress(?string $adress):self
+    {
+    $this->adress = $adress;
+ 
+    return $this;
+    }
     /**
      * A visual identifier that represents this user.
      *

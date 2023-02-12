@@ -6,7 +6,6 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         # used to reload user from session & other features (e.g. switch_user)
-        #$2y$13$s1oUgR2hdlpuz9j/ywHymeiS2JLCq8XMxxg2oNSaXD7DNNtt4ZDq.
         app_user_provider:
             entity:
                 class: App\Entity\User
