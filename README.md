@@ -28,11 +28,18 @@ Pour voir https://github.com/Enockm21/arosaje-mspr.gitl'application `react` http
 
 `php bin/console doctrine:database:create`
 créer une table
-php bin/console make:entity 
+`php bin/console make:entity` 
 créer le fichier de migration
-php bin/console make:migration 
+php `bin/console make:migration`
 générer les tables dans la base de donées
-php bin/console doctrine:migrations:migrate  
+`php bin/console doctrine:migrations:migrate`
+
+# App mobile
+
+Pour utiliser l'app sur mobile installer l'application Expo Go
+
+Puis aller sur le dossier app-mobile faites npm run start ou yarn start
+puis scanner le QR affiché en terminal
 
 Lien pour le thème
 https://www.creative-tim.com/product/argon-dashboard-react?ref=adr-documentation-header#
