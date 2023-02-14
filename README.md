@@ -36,10 +36,18 @@ générer les tables dans la base de donées
 
 # App mobile
 
-Pour utiliser l'app sur mobile installer l'application Expo Go
+Pour utiliser l'app sur mobile installer l'application Expo Go 
 
+npm install
 Puis aller sur le dossier app-mobile faites npm run start ou yarn start
 puis scanner le QR affiché en terminal
+
+Si vous rencontrez des problèmes du fichier expo
+
+sudo apt-get install android-sdk
+puis 
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/tools
 
 Lien pour le thème
 https://www.creative-tim.com/product/argon-dashboard-react?ref=adr-documentation-header#
