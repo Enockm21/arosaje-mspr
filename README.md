@@ -38,8 +38,8 @@ générer les tables dans la base de donées
 
 Pour utiliser l'app sur mobile installer l'application Expo Go 
 
-npm install
-Puis aller sur le dossier app-mobile faites npx expo start en ligne de command
+`npm install`
+Puis aller sur le dossier app-mobile faites `npx expo start` en ligne de command
 
 puis scanner le QR affiché en terminal
 
