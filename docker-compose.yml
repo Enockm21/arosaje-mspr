@@ -42,7 +42,6 @@ services:
             - '3000:3000'
         volumes:
           - ./app-front:/app
-          -  $PWD/app/node_modules
 
 networks:
     dev:
