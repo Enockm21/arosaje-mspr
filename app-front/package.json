@@ -34,5 +34,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@heroicons/react": "^2.0.14",
+    "@material-tailwind/react": "^1.2.5",
+    "html-webpack-plugin": "^5.5.0",
+    "prop-types": "^15.8.1",
+    "react-router-dom": "^6.8.0"
   }
 }
