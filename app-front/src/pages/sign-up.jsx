@@ -23,40 +23,41 @@ export function SignUp() {
         <Card className="absolute top-2/4 left-2/4 w-full max-w-[24rem] -translate-y-2/4 -translate-x-2/4">
           <CardHeader
             variant="gradient"
-            color="blue"
+            color="green"
             className="mb-4 grid h-28 place-items-center"
           >
             <Typography variant="h3" color="white">
-              Sign Up
+              Création du compte
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input variant="standard" label="Name" size="lg" />
-            <Input variant="standard" type="email" label="Email" size="lg" />
+            <Input variant="standard" label="Prénom" size="lg" />
+            <Input variant="standard" label="Nom" size="lg" />
+            <Input variant="standard" type="email" label="Mail" size="lg" />
             <Input
               variant="standard"
               type="password"
-              label="Password"
+              label="Mot de passe"
               size="lg"
             />
             <div className="-ml-2.5">
-              <Checkbox label="I agree the Terms and Conditions" />
+              <Checkbox label="Je suis d'accord avec les conditions d'utilisation" />
             </div>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" fullWidth>
-              Sign Up
+            <Button variant="gradient" color="green" fullWidth>
+              Créer un compte
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">
-              Already have an account?
+              Vous avez déjà un compte?
               <Link to="/sign-in">
                 <Typography
                   as="span"
                   variant="small"
-                  color="blue"
+                  color="green"
                   className="ml-1 font-bold"
                 >
-                  Sign in
+                  Se connecter
                 </Typography>
               </Link>
             </Typography>
