@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Card,
@@ -12,6 +13,36 @@ import {
 import { SimpleFooter } from "../widgets/layout/simple-footer";
 
 export function SignUp() {
+  const [DataAuthentification, setDataAuthentification] = useState({
+    firstname: "",
+    lastname: "",
+    pseudo: "",
+    email: "",
+    password: ""
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    fetch("http://localhost:8081/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(DataAuthentification),
+    })
+      .then((response) => {
+      })
+      .catch((error => {
+        alert("Error: ", error);
+      }))
+  }
+
+  const handleDataChange = (event) => {
+    const { name, value } = event.target;
+    setDataAuthentification((DataAuthentification) => ({ ...DataAuthentification, [name]: value }));
+  }
+
   return (
     <>
       <img
@@ -31,21 +62,49 @@ export function SignUp() {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input variant="standard" label="Prénom" size="lg" />
-            <Input variant="standard" label="Nom" size="lg" />
-            <Input variant="standard" type="email" label="Mail" size="lg" />
+            <Input
+              variant="standard"
+              label="Prénom"
+              name="firstname"
+              size="lg"
+              value={DataAuthentification.firstname}
+              onChange={handleDataChange} />
+            <Input
+              variant="standard"
+              label="Nom"
+              name="lastname"
+              size="lg"
+              value={DataAuthentification.lastname}
+              onChange={handleDataChange} />
+            <Input
+              variant="standard"
+              label="Pseudo"
+              name="pseudo"
+              size="lg"
+              value={DataAuthentification.pseudo}
+              onChange={handleDataChange} />
+            <Input
+              variant="standard"
+              type="email"
+              label="Mail"
+              name="email"
+              size="lg"
+              value={DataAuthentification.email}
+              onChange={handleDataChange} />
             <Input
               variant="standard"
               type="password"
               label="Mot de passe"
+              name="password"
               size="lg"
-            />
+              value={DataAuthentification.password}
+              onChange={handleDataChange} />
             <div className="-ml-2.5">
               <Checkbox label="Je suis d'accord avec les conditions d'utilisation" />
             </div>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" color="green" fullWidth>
+            <Button variant="gradient" color="green" fullWidth onClick={handleSubmit}>
               Créer un compte
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">
