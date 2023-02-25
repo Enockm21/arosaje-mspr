@@ -23,39 +23,39 @@ export function SignIn() {
         <Card className="absolute top-2/4 left-2/4 w-full max-w-[24rem] -translate-y-2/4 -translate-x-2/4">
           <CardHeader
             variant="gradient"
-            color="blue"
+            color="green"
             className="mb-4 grid h-28 place-items-center"
           >
             <Typography variant="h3" color="white">
-              Sign In
+              Se connecter
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input variant="standard" type="email" label="Email" size="lg" />
+            <Input variant="standard" type="email" label="Mail" size="lg" />
             <Input
               variant="standard"
               type="password"
-              label="Password"
+              label="Mot de passe"
               size="lg"
             />
             <div className="-ml-2.5">
-              <Checkbox label="Remember Me" />
+              <Checkbox label="Se souvenir de moi" />
             </div>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" fullWidth>
-              Sign In
+            <Button variant="gradient" fullWidth color="green">
+              Se connecter
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">
-              Don't have an account?
+              Vous n'avez pas de compte?
               <Link to="/sign-up">
                 <Typography
                   as="span"
                   variant="small"
-                  color="blue"
+                  color="green"
                   className="ml-1 font-bold"
                 >
-                  Sign up
+                  Rejoignez-nous!
                 </Typography>
               </Link>
             </Typography>

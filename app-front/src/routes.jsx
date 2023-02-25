@@ -2,6 +2,7 @@ import { Profile } from "./pages/profile";
 import { SignIn} from './pages/sign-in'
 import { SignUp} from './pages/sign-up'
 import { Home} from './pages/home'
+import { Settings } from './pages/settings'
 
 
 import {
@@ -9,13 +10,13 @@ import {
   UserCircleIcon,
   ArrowRightOnRectangleIcon,
   UserPlusIcon,
-  DocumentTextIcon,
+  Cog6ToothIcon,
 } from "@heroicons/react/24/solid";
 
 export const routes = [
   {
     icon: HomeIcon,
-    name: "home",
+    name: "acceuil",
     path: "/home",
     element: <Home />,
   },
@@ -27,22 +28,21 @@ export const routes = [
   },
   {
     icon: ArrowRightOnRectangleIcon,
-    name: "Sign In",
+    name: "se connecter",
     path: "/sign-in",
     element: <SignIn />,
   },
   {
     icon: UserPlusIcon,
-    name: "Sign Up",
+    name: "Créer un compte",
     path: "/sign-up",
     element: <SignUp />,
   },
   {
-    icon: DocumentTextIcon,
-    name: "Docs",
-    href: "https://www.material-tailwind.com/docs/react/installation",
-    target: "_blank",
-    element: "",
+    icon: Cog6ToothIcon,
+    name: "paramètres",
+    path: "/settings",
+    element: <Settings />,
   },
 ];
 
