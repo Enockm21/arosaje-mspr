@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios"
 import {
   Card,
   CardBody,
@@ -22,6 +23,20 @@ import { contactData } from "../data/contact-data";
 
 
 export function Home() {
+  React.useEffect(()=>{
+    axios.post('http://localhost:8081/api/login', {
+      username: 'ericd7559@gmail.com',
+      password: '12345678'
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  },[])
+
   return (
     <>
       <div className="relative flex h-screen content-center items-center justify-center pt-16 pb-32">
