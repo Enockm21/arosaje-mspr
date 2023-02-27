@@ -60,7 +60,7 @@ export function Navbar({ brandName, routes, action }) {
   );
 
   return (
-    <MTNavbar color="transparent" className="p-3">
+    <MTNavbar color="green" className="p-3">
       <div className="container mx-auto flex items-center justify-between text-white">
         <Link to="/home">
           <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-bold">
