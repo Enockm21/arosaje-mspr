@@ -6,7 +6,7 @@ const apiUrl = () => {
     switch (true) {
         case window.location.href.includes("localhost:3000"):
         case window.location.href.includes("localhost:3001"):
-            url = "https://bk7bpaxspt.preview.infomaniak.website/api/";
+            url = "http://localhost:8081/api/";
             break;
         default:
             throw new Error("Cannot detect corresponding API");
