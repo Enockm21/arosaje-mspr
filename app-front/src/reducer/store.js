@@ -1,11 +1,12 @@
 
-//import Utils from "../services/Utils";
+import Utils from "../service/Utils";
 import React, { createContext, useReducer } from "react";
 
 const initialState = {
   user: [],
   users: [],
-  isAuth:""// Utils.checkToken(),
+  plantesList:[],
+  isAuth:Utils.checkToken(),
 }
 
 const store = createContext(initialState);
@@ -25,6 +26,13 @@ const StateProvider = ({ children }) => {
           const newState = {
             ...curState,
             isAuth: action.payload,
+          };
+          return newState;
+        }
+        case "SET_PLANTLIST": {
+          const newState = {
+            ...curState,
+            plantesList: action.payload,
           };
           return newState;
         }

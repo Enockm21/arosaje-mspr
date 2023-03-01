@@ -18,11 +18,12 @@ const apiUrl = () => {
 const request = async (data, url, method) => {
   var headers = "";
 
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem("arosaje-token")) {
+        console.log("asas",localStorage.getItem("arosaje-token"))
         headers = {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
+            Authorization: "Bearer" + localStorage.getItem("arosaje-token"),
         };
     } else {
         headers = {
