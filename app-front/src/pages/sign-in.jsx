@@ -24,7 +24,6 @@ export function SignIn() {
   const [pwd, setPwd] = React.useState("");
   const [loader, setLoader] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
-  const [passwordShow, setPasswordShow] = React.useState(false);
   console.log(pwd, username, "res");
   console.log(state.isAuth, "state.isAuth");
   const connect = (e) => {
@@ -56,6 +55,8 @@ export function SignIn() {
         );
       });
   };
+
+
   return (
     <>
       {state.isAuth ? (
