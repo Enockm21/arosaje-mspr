@@ -2,7 +2,7 @@ import { Profile } from "./pages/profile";
 import { SignIn} from './pages/sign-in'
 import { SignUp} from './pages/sign-up'
 import { Home} from './pages/home'
-import { Settings } from './pages/settings'
+import  Settings from './pages/settings'
 
 
 import {

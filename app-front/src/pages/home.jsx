@@ -1,5 +1,9 @@
 import React from "react";
+import axios from "axios";
+import ApiService from "../service/Apiservice";
 import ImgCard from '../img/teamwork.jpeg'
+import { store } from "../reducer/store";
+
 import {
   Card,
   CardBody,
@@ -12,47 +16,44 @@ import {
 
 
 export function Home() {
+  const { dispatch, state } = React.useContext(store);
+  const [loader, setLoader] = React.useState(false);
+  const [plantesList, setPlantesList] = React.useState([]);
+  const [errorMessage, setErrorMessage] = React.useState("");
 
-  const plantes = [
-    {
-      id: 1,
-      img: "",
-      nom: "plante 1",
-      description: "Lorem ipsum dolor sit amet. Et unde sint cum aspernatur unde qui ullam sint aut reiciendis dignissimos qui velit beatae et optio quia aut dolorum quasi. Aut nobis repudiandae cum debitis incidunt non incidunt autem vel iste perferendis. Ut blanditiis quisquam aut nisi accusantium aut iste modi et voluptas internos eum quasi ipsum. Eum alias laudantium et molestiae quod et nisi quam ut quae repellendus et tempore incidunt eum pariatur molestiae qui nulla eveniet! ",
-      user: "user 1",
-      ville: "toulouse"
-    },
-    {
-      id: 2,
-      img: "",
-      nom: "plante 2",
-      description: "ioroifjriofj roifjri roifjiofjr ofijr",
-      user: "user 2",
-      ville: "toulouse"
-    },
-    {
-      id: 3,
-      img: "",
-      nom: "plante 3",
-      description: "ioroifjriofj roifjri roifjiofjr ofireizr rfijziojfzij foizfjzoijjr",
-      user: "user 1",
-      ville: "toulouse"
-    },
-    {
-      id: 4,
-      img: "",
-      nom: "plante 4",
-      description: "ioroifjriofj roifjri roifjiofjr ofijr",
-      user: "user 1",
-      ville: "toulouse"
-    }
-  ]
+
+ 
+  // 
+  const getPlantes =()=>{
+    ApiService.request({}, "plantes", "get")
+    .then((res) =>{
+      setLoader(false);
+      //dispatch({ type: "SET_USER", payload: response.data });
+      console.log(res, "res");
+      // localStorage.setItem("user", JSON.stringify(response.data.name));
+      //  localStorage.setItem("user_role", response.data.role);
+      const response=res
+     
+      dispatch({ type: "SET_PLANTLIST", payload: response });
+    })
+    .catch(function () {
+      // manque un message quand c'est une error
+      setLoader(false);
+      setErrorMessage(
+        "Impossible de se connecter, vérifier votre mot de passe ou votre adresse email."
+      );
+    });
+  }
+  React.useEffect(()=>{
+    getPlantes()
+  },[])
+  
 
   return (
     <>
       <div className="grid justify-items-center grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-        {plantes.map((plante) => (
-          <Card className="w-[15rem] lg:w-[20rem] overflow-hidden border-green-500 border-2 m-4">
+        {state.plantesList.map((plante,key) => (
+          <Card key={key} className="w-[15rem] lg:w-[20rem] overflow-hidden border-green-500 border-2 m-4">
             <CardHeader
               color="transparent"
               className="m-0 rounded-none md:max-h-[20rem] max-h-[15rem] min-h-[8rem]"
@@ -65,7 +66,7 @@ export function Home() {
             </CardHeader>
             <CardBody>
               <Typography variant="lead" color="black">
-                {plante.nom}
+                {plante.name}
               </Typography>
               <Typography variant="lead" color="gray" className="mt-3 text-sm max-h-[5rem] overflow-hidden text-ellipsis">
                 {plante.description}
@@ -73,12 +74,12 @@ export function Home() {
             </CardBody>
             <CardFooter className="flex items-center justify-between">
               <div className="flex items-center -space-x-3">
-                <Tooltip content={plante.user}>
+                <Tooltip content={""}>
                   <Avatar
                     size="sm"
                     variant="circular"
-                    alt={plante.user}
-                    src={plante.img}
+                    alt={""}
+                    src={""}
                     className=""
                   />
                 </Tooltip>

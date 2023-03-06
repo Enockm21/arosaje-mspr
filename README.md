@@ -50,5 +50,5 @@ puis
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/tools
 
-Lien pour le thème
-https://www.creative-tim.com/product/argon-dashboard-react?ref=adr-documentation-header#
+Lien pour la doc du thème :
+https://www.material-tailwind.com/docs/react/installation
