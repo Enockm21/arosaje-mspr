@@ -50,9 +50,9 @@ export function Home() {
 
   return (
     <>
-      <div className="container mx-auto flex flex-wrap justify-center md:justify-between">
+      <div className="grid justify-items-center grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {plantes.map((plante) => (
-          <Card className="w-[15rem] md:w-[20rem] overflow-hidden border-green-500 border-2 m-4">
+          <Card className="w-[15rem] lg:w-[20rem] overflow-hidden border-green-500 border-2 m-4">
             <CardHeader
               color="transparent"
               className="m-0 rounded-none md:max-h-[20rem] max-h-[15rem] min-h-[8rem]"
