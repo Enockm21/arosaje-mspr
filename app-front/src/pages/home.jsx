@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import ApiService from "../service/Apiservice";
 import ImgCard from '../img/teamwork.jpeg'
 import { store } from "../reducer/store";

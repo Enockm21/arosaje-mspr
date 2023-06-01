@@ -9,6 +9,8 @@ import { SignIn } from "./pages/sign-in";
 import { SignUp } from "./pages/sign-up";
 import { Home } from "./pages/home";
 import  Settings from "./pages/settings";
+import Plante from "./pages/plante";
+import NewPlante from "./pages/newPlante";
 
 function App() {
   const { state } = React.useContext(store);
@@ -71,6 +73,22 @@ function App() {
             <PrivateRoute isAuth={state.isAuth}>
               <Navigate to="/home" replace />
             </PrivateRoute>
+          }
+        />
+        <Route
+          path="/plante/:id"
+          element={
+           // <PrivateRoute isAuth={state.isAuth}>
+              <Plante />
+           // </PrivateRoute>
+          }
+        />
+        <Route
+          path="/plante/new"
+          element={
+           // <PrivateRoute isAuth={state.isAuth}>
+              <NewPlante />
+           // </PrivateRoute>
           }
         />
       </Routes>

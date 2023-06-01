@@ -7,7 +7,7 @@ module.exports = withMT({
     screens: {
       'sm': '400px',
       'md': '600px',
-      'lg': '775px',
+      'lg': '800px',
       'xl': '1140px',
       '2xl': '1400px',
     },
