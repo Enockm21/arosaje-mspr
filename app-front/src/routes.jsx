@@ -2,7 +2,9 @@ import { Profile } from "./pages/profile";
 import { SignIn} from './pages/sign-in'
 import { SignUp} from './pages/sign-up'
 import { Home} from './pages/home'
+import Logout from './pages/logout'
 import  Settings from './pages/settings'
+
 
 
 import {
@@ -16,7 +18,7 @@ import {
 export const routes = [
   {
     icon: HomeIcon,
-    name: "acceuil",
+    name: "accueil",
     path: "/home",
     element: <Home />,
   },
@@ -26,12 +28,7 @@ export const routes = [
     path: "/profile",
     element: <Profile />,
   },
-  {
-    icon: ArrowRightOnRectangleIcon,
-    name: "se connecter",
-    path: "/sign-in",
-    element: <SignIn />,
-  },
+  
   {
     icon: UserPlusIcon,
     name: "Créer un compte",
@@ -43,6 +40,12 @@ export const routes = [
     name: "paramètres",
     path: "/settings",
     element: <Settings />,
+  },
+  {
+    icon: ArrowRightOnRectangleIcon,
+    name: "se deconnecter",
+    path: "/logout",
+    element: <Logout />,
   },
 ];
 
