@@ -23,18 +23,23 @@ class ApiRegisterController extends AbstractController
      */
     public function index(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): JsonResponse
     {
-       
-        $data = $request->request->all();
-        $user = new User();
-        $user->setFistName($data['first_name']);
-        $user->setLastName($data['last_name']);
-        $user->setPseudo($data['pseudo']);
-        $user->setEmail($data['email']);
-        $hashedPassword = $userPasswordHasher->hashPassword($user, $data['password']);
-        $user->setPassword($hashedPassword);
-        $entityManager->persist($user);
-        $entityManager->flush();
-        return new JsonResponse(['status' => 'User created!']);
+       try {
+            $data = json_decode($request->getContent(), true) ;
+            $user = new User();
+            $user->setFistName($data['first_name']);
+            $user->setLastName($data['last_name']);
+            $user->setPseudo($data['pseudo']);
+            $user->setEmail($data['email']);
+         //   $user->setAdress($data['adress']);
+            $hashedPassword = $userPasswordHasher->hashPassword($user, $data['password']);
+            $user->setPassword($hashedPassword);
+            $entityManager->persist($user);
+            $entityManager->flush();
+        return new JsonResponse(['message' => 'User created!']);
+       } catch (\Exception $e) {
+         throw $e;
+       }
+        
         
     }
 }

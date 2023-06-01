@@ -16,8 +16,19 @@ class ApiLoginController extends AbstractController
      */
     public function login()
     {
-        
-        //dd($request);
+
+
+        $user = $this->getUser();
+
+        return $this->json([
+            'username'  => $user->getUserIdentifier(),
+            'roles' => $user->getRoles(),
+        ]);
+    }
+}
+
+
+//dd($request);
         // $user=$security->getUser();
         // if (null === $user) {
         //  return $this->json([
@@ -26,15 +37,8 @@ class ApiLoginController extends AbstractController
         // }
         
         //$token='zeze';
-        $user= $this->getUser();
-        // return $this->json([
+// return $this->json([
         //     'user'  => $user->getUserIdentifier(),
         //     'token' => $token,
         // ]);
         // dd($request);
-        return $this->json([
-                'username'  => $user->getUserIdentifier(),
-                'roles' => $user->getRoles(),
-            ]);
-    }
-}
