@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import ApiService from "../service/Apiservice";
+import { store } from "../reducer/store";
+import { useNavigate } from "react-router-dom";
+
 import {
   Card,
   CardHeader,
@@ -10,45 +14,42 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
-import { SimpleFooter } from "../widgets/layout/simple-footer";
 
 export function SignUp() {
+  const navigate = useNavigate();
   const [DataAuthentification, setDataAuthentification] = useState({
-    firstname: "",
-    lastname: "",
+    first_name: "",
+    last_name: "",
     pseudo: "",
     email: "",
-    password: ""
+    password: "",
   });
-
+  console.log(DataAuthentification, "DataAuthentification");
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    fetch("http://localhost:8081/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(DataAuthentification),
-    })
-      .then((response) => {
+    ApiService.request(DataAuthentification, "register", "post")
+      .then(function (response) {
+        if (response.message === "User created!") {
+          navigate("/sign-in");
+        }
       })
-      .catch((error => {
-        alert("Error: ", error);
-      }))
-  }
+      .catch(function (res) {
+        // manque un message quand c'est une error
+        console.log(res, "rek");
+      });
+  };
 
   const handleDataChange = (event) => {
     const { name, value } = event.target;
-    setDataAuthentification((DataAuthentification) => ({ ...DataAuthentification, [name]: value }));
-  }
+    setDataAuthentification((DataAuthentification) => ({
+      ...DataAuthentification,
+      [name]: value,
+    }));
+  };
 
   return (
     <>
-      <img
-        src=""
-        className="absolute inset-0 z-0 h-full w-full object-cover" alt="test"
-      />
+      
       <div className="absolute inset-0 z-0 h-full w-full bg-black/50" />
       <div className="container mx-auto p-4">
         <Card className="absolute top-2/4 left-2/4 w-full max-w-[24rem] -translate-y-2/4 -translate-x-2/4">
@@ -65,24 +66,27 @@ export function SignUp() {
             <Input
               variant="standard"
               label="Prénom"
-              name="firstname"
+              name="first_name"
               size="lg"
-              value={DataAuthentification.firstname}
-              onChange={handleDataChange} />
+              value={DataAuthentification.first_name}
+              onChange={handleDataChange}
+            />
             <Input
               variant="standard"
               label="Nom"
-              name="lastname"
+              name="last_name"
               size="lg"
-              value={DataAuthentification.lastname}
-              onChange={handleDataChange} />
+              value={DataAuthentification.last_name}
+              onChange={handleDataChange}
+            />
             <Input
               variant="standard"
               label="Pseudo"
               name="pseudo"
               size="lg"
               value={DataAuthentification.pseudo}
-              onChange={handleDataChange} />
+              onChange={handleDataChange}
+            />
             <Input
               variant="standard"
               type="email"
@@ -90,7 +94,8 @@ export function SignUp() {
               name="email"
               size="lg"
               value={DataAuthentification.email}
-              onChange={handleDataChange} />
+              onChange={handleDataChange}
+            />
             <Input
               variant="standard"
               type="password"
@@ -98,13 +103,19 @@ export function SignUp() {
               name="password"
               size="lg"
               value={DataAuthentification.password}
-              onChange={handleDataChange} />
+              onChange={handleDataChange}
+            />
             <div className="-ml-2.5">
               <Checkbox label="Je suis d'accord avec les conditions d'utilisation" />
             </div>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" color="green" fullWidth onClick={handleSubmit}>
+            <Button
+              variant="gradient"
+              color="green"
+              fullWidth
+              onClick={handleSubmit}
+            >
               Créer un compte
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">
@@ -123,9 +134,7 @@ export function SignUp() {
           </CardFooter>
         </Card>
       </div>
-      <div className="container absolute bottom-6 left-2/4 z-10 mx-auto -translate-x-2/4 text-white">
-        <SimpleFooter />
-      </div>
+      
     </>
   );
 }

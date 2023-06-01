@@ -11,6 +11,7 @@ import { Home } from "./pages/home";
 import  Settings from "./pages/settings";
 import Plante from "./pages/plante";
 import NewPlante from "./pages/newPlante";
+import Logout from "./pages/logout";
 
 function App() {
   const { state } = React.useContext(store);
@@ -66,7 +67,14 @@ function App() {
           }
         />
         {/* <Route path={path} element={<PrivateRoute>{element}</PrivateRoute>} /> */}
-
+        <Route
+          path="/logout"
+          element={
+            //<PrivateRoute isAuth={state.isAuth}>
+              <Logout />
+            //</PrivateRoute>
+          }
+        />
         <Route
           path="*"
           element={
