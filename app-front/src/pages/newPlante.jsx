@@ -42,9 +42,9 @@ export function NewPlante() {
                 </div>
             </div>
             <div className="relative w-fit h-fit">
-               {/*  <Button variant="gradient" className="flex items-center gap-3 absolute" color="green">
+                <Button variant="gradient" className="flex items-center gap-3 absolute" color="green">
                     <PhotoIcon strokeWidth={2} className="h-5 w-5" /> Importer une image
-                </Button> */}
+                </Button>
                 <input
                     type="file"
                     id="image"
