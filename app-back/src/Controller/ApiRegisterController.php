@@ -25,14 +25,12 @@ class ApiRegisterController extends AbstractController
     {
        try {
             $data = json_decode($request->getContent(), true) ;
-            return new JsonResponse(['message' => 'User created!',"data"=> $data]);
-
             $user = new User();
             $user->setFistName($data['first_name']);
             $user->setLastName($data['last_name']);
             $user->setPseudo($data['pseudo']);
             $user->setEmail($data['email']);
-            $user->setAdress($data['adress']);
+         //   $user->setAdress($data['adress']);
             $hashedPassword = $userPasswordHasher->hashPassword($user, $data['password']);
             $user->setPassword($hashedPassword);
             $entityManager->persist($user);
