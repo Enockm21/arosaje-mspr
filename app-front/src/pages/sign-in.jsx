@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import ApiService from "../service/Apiservice";
 import { Navigate, useLocation } from "react-router-dom";
 import { store } from "../reducer/store";
+import jwt_decode from "jwt-decode";
 
 import {
   Card,
@@ -14,7 +15,6 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
-import { SimpleFooter } from "../widgets/layout/simple-footer";
 
 export function SignIn() {
   const { dispatch, state } = React.useContext(store);
@@ -26,6 +26,9 @@ export function SignIn() {
   const [errorMessage, setErrorMessage] = React.useState("");
   console.log(pwd, username, "res");
   console.log(state.isAuth, "state.isAuth");
+  var decoded = jwt_decode("eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODU1MTkxMzQsImV4cCI6MTY4NTUyMjczNCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiZXJpY2Q3NTU5QGdtYWlsLmNvbSJ9.seYjmEnH7fyUWWnFDM4Yg4xsbaX8U19JbOBV9zcvwb11rqTzIJWBALEu-pDcBAGXm0K8ec_C_GcAGA5ZinQ7Qn7xBz_4KsoVfhNP4uB8PuWXwd0hb_vEC9C7bN8En1K3MJGnzLZUj4XpjrR4Gqss0ZaKNZZwt1k1HzcAN4Ly2qLSKNyHUPGVRvWtjBQOlOyayYb1JEQEa5MmvNvJln0lBaiNAHGsnkKv1aEGzDYlYf16Guu233Zax7ZIsvKtsJ7xAt1sLsOH2q0Ygto83PF9w9E54rxLTbPll60lArcb3zcU-2h4GB-jkKUl16qp_nDAiEEnxEHCpYrzSz3HylWx7A");
+  console.log(decoded, "decoded.decoded");
+
   const connect = (e) => {
     e.preventDefault();
     setLoader(true);
@@ -130,9 +133,7 @@ export function SignIn() {
               </Card>
             </form>
           </div>
-          <div className="container absolute bottom-6 left-2/4 z-10 mx-auto -translate-x-2/4 text-white">
-            <SimpleFooter />
-          </div>{" "}
+          
         </>
       )}
     </>

@@ -23,7 +23,7 @@ const request = async (data, url, method) => {
         headers = {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: "Bearer" + localStorage.getItem("arosaje-token"),
+             Authorization: "Bearer" + localStorage.getItem("arosaje-token"),
         };
     } else {
         headers = {
