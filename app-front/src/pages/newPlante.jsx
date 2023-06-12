@@ -4,14 +4,16 @@ import {
     Button,
     Input,
     Textarea,
-    Typography
+    Typography,
+    Tooltip,
 } from "@material-tailwind/react";
-import { PhotoIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { PhotoIcon, XMarkIcon, GlobeAltIcon } from "@heroicons/react/24/outline";
 
 export function NewPlante() {
 
     let date = new Date();
     const DateToday = date.toISOString().split('T')[0];
+    let checkLocation = null;
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -21,7 +23,8 @@ export function NewPlante() {
     const [price, setPrice] = useState('');
     const [startDate, setStartDate] = useState(DateToday);
     const [endDate, setEndDate] = useState(null);
-    const [adress, setAdress] = useState('');
+    const [location, setLocation] = useState('');
+    const [locationInvalide, setLocationInvalide] = useState(false);
     const [isFormValid, setIsFormValid] = useState(false);
 
     const handleFileChange = (e) => {
@@ -60,18 +63,59 @@ export function NewPlante() {
         e.preventDefault();
         // Envoyer le formulaire
         if (isFormValid) {
-          console.log('Formulaire envoyé');
+            console.log('Formulaire envoyé');
         }
-      }
+    }
+
+    function getPosition() {
+        navigator.geolocation.getCurrentPosition(succesLocation);
+    };
+
+    const succesLocation = (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        const url = `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}`;
+
+        fetch(url).then(res => res.json()).then(data => {
+            const houseNumber = data.address.house_number;
+            const road = data.address.road;
+            const postcode = data.address.postcode;
+            const city = data.address.city;
+            setLocation(`${houseNumber} ${road} ${postcode} ${city}`);
+        }).catch((error) => {
+            alert("Une erreur est survenue. Impossible d'utiliser votre localisation...")
+        });
+    };
+
+    const handleLocationChange = (location) => {
+        setLocation(location);
+        
+        clearTimeout(checkLocation);
+
+        const url = `https://geocode.maps.co/search?q=${location}`;
+        
+        checkLocation = setTimeout(() => {
+            debugger
+            // fetch(url).then(res => res.json()).then(data => {
+            //     debugger
+            //     if(data.lenght == 1)
+            //     else
+            //         throw new Error();
+            // }).catch((error) => {
+            //     setLocationInvalide(true);
+            // });
+        }, 1000);
+    };
 
     useEffect(() => {
         // Vérifier la validité du formulaire
         if (name && description && image && price && startDate && endDate) {
-          setIsFormValid(true);
+            setIsFormValid(true);
         } else {
-          setIsFormValid(false);
+            setIsFormValid(false);
         }
-      }, [name, description, image, price, startDate, endDate]);
+    }, [name, description, image, price, startDate, endDate]);
 
     return (
         <div>
@@ -124,7 +168,25 @@ export function NewPlante() {
                 </div>
                 <div className="">
                     <div className="h-20">
-                        <div className="relative w-64">
+                        <div className="flex w-96">
+                            <Input
+                                id="location"
+                                type="text"
+                                label="Localisation"
+                                value={location}
+                                color="green"
+                                onChange={(e) => handleLocationChange(e.target.value)}
+                                error={locationInvalide}
+                            />
+                            <Tooltip content="Utiliser votre localisation" placement="top">
+                                <Button className="rounded-full ml-5" onClick={getPosition}>
+                                    <GlobeAltIcon className="h-5" />
+                                </Button>
+                            </Tooltip>
+
+
+                        </div>
+                        <div className="relative w-64 mt-10">
                             <Button variant="gradient" className="flex items-center gap-3 absolute w-full" color="green">
                                 <PhotoIcon strokeWidth={2} className="h-5 w-5" /> Importer une image
                             </Button>
