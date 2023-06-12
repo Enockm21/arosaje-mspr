@@ -106,6 +106,21 @@ export function NewPlante() {
             // });
         }, 1000);
     };
+    const convertToBase64 = (file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          const base64String = reader.result;
+          // Utilisez la base64String comme nécessaire (par exemple, envoyez-la au serveur)
+          console.log(base64String);
+        };
+        reader.onerror = (error) => {
+          console.log("Erreur lors de la conversion en base64 :", error);
+        };
+      };
+      useEffect(() => {
+       if(image) convertToBase64(image);
+      }, [image]);
 
     useEffect(() => {
         // Vérifier la validité du formulaire
