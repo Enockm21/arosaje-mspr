@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
     Button,
@@ -10,16 +10,19 @@ import { PhotoIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 export function NewPlante() {
 
+    let date = new Date();
+    const DateToday = date.toISOString().split('T')[0];
+
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
     const [showImagePopup, setShowImagePopup] = useState(false);
     const [imageUrl, setImageUrl] = useState('');
     const [price, setPrice] = useState('');
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    }
+    const [startDate, setStartDate] = useState(DateToday);
+    const [endDate, setEndDate] = useState(null);
+    const [adress, setAdress] = useState('');
+    const [isFormValid, setIsFormValid] = useState(false);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -47,11 +50,28 @@ export function NewPlante() {
         const value = e.target.value;
         // Vérifier si la valeur est un nombre et supérieure ou égale à zéro
         if (!isNaN(value) && value >= 0) {
-          setPrice(value);
-        } else{
+            setPrice(value);
+        } else {
             alert("Prix n'est pas conforme");
         }
     }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Envoyer le formulaire
+        if (isFormValid) {
+          console.log('Formulaire envoyé');
+        }
+      }
+
+    useEffect(() => {
+        // Vérifier la validité du formulaire
+        if (name && description && image && price && startDate && endDate) {
+          setIsFormValid(true);
+        } else {
+          setIsFormValid(false);
+        }
+      }, [name, description, image, price, startDate, endDate]);
 
     return (
         <div>
@@ -82,8 +102,27 @@ export function NewPlante() {
                         label="Prix"
                         min="0"
                     />
+                    <div className="mt-10 mb-10 flex ">
+                        <Input
+                            id="startDate"
+                            type="date"
+                            label="Du"
+                            color="green"
+                            min={DateToday}
+                            max={endDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                        />
+                        <Input
+                            id="endDate"
+                            type="date"
+                            label="Au"
+                            color="green"
+                            min={startDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                        />
+                    </div>
                 </div>
-                <div>
+                <div className="">
                     <div className="h-20">
                         <div className="relative w-64">
                             <Button variant="gradient" className="flex items-center gap-3 absolute w-full" color="green">
@@ -102,8 +141,11 @@ export function NewPlante() {
                         {image && <Typography variant="lead">Nom du fichier : {image.name}</Typography>}
                         {image && <Button onClick={handleViewImage}>Voir l'image</Button>}
                     </div>
+                    <div className="text-center mt-20">
+                        <Button ripple={true} color="green" disabled={!isFormValid}>Ajouter</Button>
+                    </div>
                 </div>
-            </form>
+            </form >
 
             {showImagePopup && (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-900 bg-opacity-75">
@@ -114,8 +156,9 @@ export function NewPlante() {
                         <img src={imageUrl} alt="Image sélectionnée" className="w-full h-auto" />
                     </div>
                 </div>
-            )}
-        </div>
+            )
+            }
+        </div >
     )
 }
 
