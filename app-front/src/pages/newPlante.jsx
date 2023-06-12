@@ -96,7 +96,6 @@ export function NewPlante() {
         const url = `https://geocode.maps.co/search?q=${location}`;
         
         checkLocation = setTimeout(() => {
-            debugger
             // fetch(url).then(res => res.json()).then(data => {
             //     debugger
             //     if(data.lenght == 1)
