@@ -67,6 +67,11 @@ class Plantes
      */
     private $end_date;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $localisation;
+
     public function __construct()
     {
         $this->advices = new ArrayCollection();
@@ -199,6 +204,18 @@ class Plantes
     public function setEndDate(\DateTimeInterface $end_date): self
     {
         $this->end_date = $end_date;
+
+        return $this;
+    }
+
+    public function getLocalisation(): ?string
+    {
+        return $this->localisation;
+    }
+
+    public function setLocalisation(string $localisation): self
+    {
+        $this->localisation = $localisation;
 
         return $this;
     }
