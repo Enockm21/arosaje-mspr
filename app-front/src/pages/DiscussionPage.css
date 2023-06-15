@@ -1,0 +1,75 @@
+.discussion-page {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.friends-list {
+  width: 200px;
+  padding: 20px;
+  background-color: #f1f1f1;
+}
+
+.friends-list h2 {
+  margin-top: 0;
+}
+
+.friends-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.friends-list li {
+  cursor: pointer;
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: #fff;
+}
+
+.friends-list li.selected {
+  background-color: #e1e1e1;
+}
+
+.discussion-container {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.discussion-messages {
+  display: flex;
+  flex-direction: column-reverse; /* Afficher les messages dans l'ordre inverse */
+  margin-bottom: 20px;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #fff;
+}
+
+.message-left {
+  align-self: flex-start;
+}
+
+.message-right {
+  align-self: flex-end;
+}
+
+.sender {
+  font-weight: bold;
+}
+
+.content {
+  margin-top: 5px;
+}
+
+.timestamp {
+  font-size: 12px;
+  color: green;
+}
+.send-button {
+  background-color: green;
+  color: white;
+}

@@ -2,6 +2,8 @@ import { Profile } from "./pages/profile";
 import { SignIn} from './pages/sign-in'
 import { SignUp} from './pages/sign-up'
 import { Home} from './pages/home'
+import  Message from './pages/message'
+
 import  Settings from './pages/settings'
 
 
@@ -11,6 +13,8 @@ import {
   ArrowRightOnRectangleIcon,
   UserPlusIcon,
   Cog6ToothIcon,
+  ChatBubbleBottomCenterIcon,
+  
 } from "@heroicons/react/24/solid";
 
 export const routes = [
@@ -26,6 +30,13 @@ export const routes = [
     path: "/profile",
     element: <Profile />,
   },
+
+  {
+    icon:ChatBubbleBottomCenterIcon,
+    name: "message",
+    path: "/message",
+    element: <Message />,
+  },
   {
     icon: ArrowRightOnRectangleIcon,
     name: "se connecter",
@@ -38,12 +49,14 @@ export const routes = [
     path: "/sign-up",
     element: <SignUp />,
   },
+
   {
     icon: Cog6ToothIcon,
     name: "paramètres",
     path: "/settings",
     element: <Settings />,
   },
+ 
 ];
 
 export default routes;

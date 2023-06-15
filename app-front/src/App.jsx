@@ -8,6 +8,8 @@ import { Profile } from "./pages/profile";
 import { SignIn } from "./pages/sign-in";
 import { SignUp } from "./pages/sign-up";
 import { Home } from "./pages/home";
+import  Message  from "./pages/message";
+
 import  Settings from "./pages/settings";
 
 function App() {
@@ -56,19 +58,25 @@ function App() {
           }
         />
         <Route
+          path="/message"
+          element={
+            //<PrivateRoute isAuth={state.isAuth}>
+              <Message />
+            //</PrivateRoute>
+          }
+        />
+        <Route
           path="/settings"
           element={
             //<PrivateRoute isAuth={state.isAuth}>
               <Settings />
             //</PrivateRoute>
           }
-        />
-        {/* <Route path={path} element={<PrivateRoute>{element}</PrivateRoute>} /> */}
-
+        />                
         <Route
           path="*"
           element={
-            <PrivateRoute isAuth={state.isAuth}>
+            <PrivateRoute isAuth={true}>
               <Navigate to="/home" replace />
             </PrivateRoute>
           }
