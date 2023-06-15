@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import {
     Button,
@@ -6,6 +6,7 @@ import {
     Textarea,
     Typography,
     Tooltip,
+    IconButton
 } from "@material-tailwind/react";
 import { PhotoIcon, XMarkIcon, GlobeAltIcon } from "@heroicons/react/24/outline";
 
@@ -13,33 +14,85 @@ export function NewPlante() {
 
     let date = new Date();
     const DateToday = date.toISOString().split('T')[0];
-    let checkLocation = null;
 
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [image, setImage] = useState(null);
-    const [showImagePopup, setShowImagePopup] = useState(false);
     const [imageUrl, setImageUrl] = useState('');
-    const [price, setPrice] = useState('');
-    const [startDate, setStartDate] = useState(DateToday);
-    const [endDate, setEndDate] = useState(null);
-    const [location, setLocation] = useState('');
-    const [locationInvalide, setLocationInvalide] = useState(false);
-    const [isFormValid, setIsFormValid] = useState(false);
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        setImage(file);
-    };
+    const [champs, setChamps] = useState({
+        name: '',
+        description: '',
+        image: null,
+        price: '',
+        startDate: '',
+        endDate: null,
+        location: ''
+    });
+
+    const [champsInvalides, setChampsInvalides] = useState({
+        name: false,
+        description: false,
+        image: false,
+        price: false,
+        startDate: false,
+        endDate: false,
+        location: false
+    });
+
+    const [showImagePopup, setShowImagePopup] = useState(false);
+
+    const validerChamps = () => {
+        let estValide = true;
+
+        // Vérifier si les champs sont vides ou null
+        Object.keys(champs).forEach((champ) => {
+          if (champs[champ] == null || (champ != "image" && champs[champ]?.trim() === '')) {
+            setChampsInvalides((prevState) => ({
+                ...prevState,
+                [champ]: true
+            }));
+            estValide = false;
+          } else  {
+            setChampsInvalides((prevState) => ({
+                ...prevState,
+                [champ]: false
+            }));
+          }
+        });
+
+        if(isNaN(champs["price"]) || champs["price"] < 0) {
+            setChampsInvalides((prevState) => ({
+                ...prevState,
+                ["price"]: true
+            }));
+            estValide = false;
+        }
+
+        if(champs["startDate"] > champs["endDate"]) {
+            setChampsInvalides((prevState) => ({
+                ...prevState,
+                ["startDate"]: true,
+                ["endDate"]: true
+            }));
+            estValide = false;
+        }
+    
+        return estValide;
+      };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (validerChamps()) {
+            // Soumettre le formulaire
+        }
+    }
 
     const handleViewImage = () => {
-        if (image) {
+        if (champs.image) {
             const reader = new FileReader();
             reader.onload = (e) => {
                 setImageUrl(e.target.result);
                 setShowImagePopup(true);
             };
-            reader.readAsDataURL(image);
+            reader.readAsDataURL(champs.image);
         }
     };
 
@@ -49,21 +102,15 @@ export function NewPlante() {
     };
 
     const handlePriceChange = (e) => {
-        console.log("test");
         const value = e.target.value;
         // Vérifier si la valeur est un nombre et supérieure ou égale à zéro
         if (!isNaN(value) && value >= 0) {
-            setPrice(value);
+            setChamps((prevState) => ({
+                ...prevState,
+                ["price"]: value
+            }));
         } else {
             alert("Prix n'est pas conforme");
-        }
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Envoyer le formulaire
-        if (isFormValid) {
-            console.log('Formulaire envoyé');
         }
     }
 
@@ -82,39 +129,58 @@ export function NewPlante() {
             const road = data.address.road;
             const postcode = data.address.postcode;
             const city = data.address.city;
-            setLocation(`${houseNumber} ${road} ${postcode} ${city}`);
+
+            if (road == undefined && postcode == undefined && city == undefined)
+                new Error();
+            setChamps((prevState) => ({
+                ...prevState,
+                ["location"]: `${houseNumber ?? ""} ${road} ${postcode} ${city}`
+            }));
         }).catch((error) => {
             alert("Une erreur est survenue. Impossible d'utiliser votre localisation...")
         });
     };
 
-    const handleLocationChange = (location) => {
-        setLocation(location);
-        
-        clearTimeout(checkLocation);
-
-        const url = `https://geocode.maps.co/search?q=${location}`;
-        
-        checkLocation = setTimeout(() => {
-            // fetch(url).then(res => res.json()).then(data => {
-            //     debugger
-            //     if(data.lenght == 1)
-            //     else
-            //         throw new Error();
-            // }).catch((error) => {
-            //     setLocationInvalide(true);
-            // });
-        }, 1000);
-    };
-
     useEffect(() => {
-        // Vérifier la validité du formulaire
-        if (name && description && image && price && startDate && endDate) {
-            setIsFormValid(true);
-        } else {
-            setIsFormValid(false);
+        if (champs.location.length > 8) {
+            const url = `https://geocode.maps.co/search?q=${champs.location}`;
+            const timeoutID = setTimeout(() => {
+
+                fetch(url).then(res => res.json()).then(data => {
+                    let result = data.length;
+                    if (result == 1)
+                        setChampsInvalides((prevState) => ({
+                            ...prevState,
+                            ["location"]: false
+                        }));
+                    else
+                        setChampsInvalides((prevState) => ({
+                            ...prevState,
+                            ["location"]: false
+                        }));
+                }).catch((error) => {
+                    setChampsInvalides((prevState) => ({
+                        ...prevState,
+                        ["location"]: false
+                    }));
+                    console.log(error);
+                });
+            }, 1000);
+
+            return () => {
+                // 👇️ clear timeout when the component unmounts
+                clearTimeout(timeoutID);
+            };
         }
-    }, [name, description, image, price, startDate, endDate]);
+    }, [champs.location]);
+
+
+    const handleChangeChamp = (champ, valeur) => {
+        setChamps((prevState) => ({
+            ...prevState,
+            [champ]: valeur
+        }));
+    };
 
     return (
         <div>
@@ -123,27 +189,30 @@ export function NewPlante() {
                     <Input
                         id="name"
                         color="green"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={champs.name}
+                        onChange={(e) => handleChangeChamp('name', e.target.value.trim())}
                         label="Nom"
+                        error={champsInvalides.name}
                     />
                     <div className="mt-10 mb-10">
                         <Textarea
                             id="description"
                             color="green"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
+                            value={champs.description}
+                            onChange={(e) => handleChangeChamp('description', e.target.value.trim())}
                             label="Description"
                             rows={10}
+                            error={champsInvalides.description}
                         />
                     </div>
                     <Input
                         type="number"
-                        value={price}
+                        value={champs.price}
                         onChange={handlePriceChange}
                         color="green"
                         label="Prix"
                         min="0"
+                        error={champsInvalides.price}
                     />
                     <div className="mt-10 mb-10 flex ">
                         <Input
@@ -152,16 +221,18 @@ export function NewPlante() {
                             label="Du"
                             color="green"
                             min={DateToday}
-                            max={endDate}
-                            onChange={(e) => setStartDate(e.target.value)}
+                            max={champs.endDate}
+                            onChange={(e) => handleChangeChamp('startDate', e.target.value)}
+                            error={champsInvalides.startDate}
                         />
                         <Input
                             id="endDate"
                             type="date"
                             label="Au"
                             color="green"
-                            min={startDate}
-                            onChange={(e) => setEndDate(e.target.value)}
+                            min={champs.startDate}
+                            onChange={(e) => handleChangeChamp('endDate', e.target.value)}
+                            error={champsInvalides.endDate}
                         />
                     </div>
                 </div>
@@ -172,21 +243,19 @@ export function NewPlante() {
                                 id="location"
                                 type="text"
                                 label="Localisation"
-                                value={location}
+                                value={champs.location}
                                 color="green"
-                                onChange={(e) => handleLocationChange(e.target.value)}
-                                error={locationInvalide}
+                                onChange={(e) => handleChangeChamp('location', e.target.value)}
+                                error={champsInvalides.location}
                             />
                             <Tooltip content="Utiliser votre localisation" placement="top">
-                                <Button className="rounded-full ml-5" onClick={getPosition}>
-                                    <GlobeAltIcon className="h-5" />
-                                </Button>
+                                <IconButton className="ml-5 h-10" onClick={getPosition} variant="text">
+                                    <GlobeAltIcon className="h-8" />
+                                </IconButton >
                             </Tooltip>
-
-
                         </div>
                         <div className="relative w-64 mt-10">
-                            <Button variant="gradient" className="flex items-center gap-3 absolute w-full" color="green">
+                            <Button variant="gradient" className="flex items-center gap-3 absolute w-full" color={champsInvalides.image == true ? "red" : "green"}>
                                 <PhotoIcon strokeWidth={2} className="h-5 w-5" /> Importer une image
                             </Button>
                             <input
@@ -194,16 +263,16 @@ export function NewPlante() {
                                 id="image"
                                 accept="image/*"
                                 className="ursor-pointer absolute block py-2 px-4 w-full opacity-0"
-                                onChange={handleFileChange}
+                                onChange={(e) => handleChangeChamp('image', e.target.files[0])}
                             />
                         </div>
                     </div>
-                    <div className="">
-                        {image && <Typography variant="lead">Nom du fichier : {image.name}</Typography>}
-                        {image && <Button onClick={handleViewImage}>Voir l'image</Button>}
+                    <div className="mt-14">
+                        {champs.image && <Typography variant="lead">Nom du fichier : {champs.image.name}</Typography>}
+                        {champs.image && <Button onClick={handleViewImage}>Voir l'image</Button>}
                     </div>
-                    <div className="text-center mt-20">
-                        <Button ripple={true} color="green" disabled={!isFormValid}>Ajouter</Button>
+                    <div className="mt-20">
+                        <Button type="submit" ripple={true} color="green">Ajouter</Button>
                     </div>
                 </div>
             </form >
