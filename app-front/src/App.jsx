@@ -8,6 +8,8 @@ import { Profile } from "./pages/profile";
 import { SignIn } from "./pages/sign-in";
 import { SignUp } from "./pages/sign-up";
 import { Home } from "./pages/home";
+import  Message  from "./pages/message";
+
 import  Settings from "./pages/settings";
 import Plante from "./pages/plante";
 import NewPlante from "./pages/newPlante";
@@ -59,6 +61,14 @@ function App() {
           }
         />
         <Route
+          path="/message"
+          element={
+            //<PrivateRoute isAuth={state.isAuth}>
+              <Message />
+            //</PrivateRoute>
+          }
+        />
+        <Route
           path="/settings"
           element={
             //<PrivateRoute isAuth={state.isAuth}>
@@ -74,11 +84,11 @@ function App() {
               <Logout />
             //</PrivateRoute>
           }
-        />
+        />              
         <Route
           path="*"
           element={
-            <PrivateRoute isAuth={state.isAuth}>
+            <PrivateRoute isAuth={true}>
               <Navigate to="/home" replace />
             </PrivateRoute>
           }
