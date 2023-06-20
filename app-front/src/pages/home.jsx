@@ -64,11 +64,11 @@ export function Home() {
                 color="transparent"
                 className="m-0 rounded-none md:max-h-[20rem] max-h-[15rem] min-h-[8rem]"
               >
-                <img src={`data:image/jpeg;base64,${plante.image}`} alt="" className="w-full h-full" />
+                <img src={`${plante.image}`} alt="" className="w-full h-full" />
               </CardHeader>
               <CardBody>
                 <Typography variant="lead" color="black">
-                  {plante.name}
+                  {plante.specie}
                 </Typography>
                 <Typography
                   variant="lead"
