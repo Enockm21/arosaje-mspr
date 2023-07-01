@@ -24,10 +24,10 @@ export function SignIn() {
   const [pwd, setPwd] = React.useState("");
   const [loader, setLoader] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
-  console.log(pwd, username, "res");
+  /* console.log(pwd, username, "res");
   console.log(state.isAuth, "state.isAuth");
   var decoded = jwt_decode("eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODU1MTkxMzQsImV4cCI6MTY4NTUyMjczNCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiZXJpY2Q3NTU5QGdtYWlsLmNvbSJ9.seYjmEnH7fyUWWnFDM4Yg4xsbaX8U19JbOBV9zcvwb11rqTzIJWBALEu-pDcBAGXm0K8ec_C_GcAGA5ZinQ7Qn7xBz_4KsoVfhNP4uB8PuWXwd0hb_vEC9C7bN8En1K3MJGnzLZUj4XpjrR4Gqss0ZaKNZZwt1k1HzcAN4Ly2qLSKNyHUPGVRvWtjBQOlOyayYb1JEQEa5MmvNvJln0lBaiNAHGsnkKv1aEGzDYlYf16Guu233Zax7ZIsvKtsJ7xAt1sLsOH2q0Ygto83PF9w9E54rxLTbPll60lArcb3zcU-2h4GB-jkKUl16qp_nDAiEEnxEHCpYrzSz3HylWx7A");
-  console.log(decoded, "decoded.decoded");
+  console.log(decoded, "decoded.decoded"); */
 
   const connect = (e) => {
     e.preventDefault();
@@ -38,17 +38,16 @@ export function SignIn() {
         setLoader(false);
         //dispatch({ type: "SET_USER", payload: response.data });
         console.log(response, "res");
+
         localStorage.setItem("arosaje-token", response.token);
+         let decodeToken= jwt_decode(response.token)
         // localStorage.setItem("user", JSON.stringify(response.data.name));
         //  localStorage.setItem("user_role", response.data.role);
 
-        // if (response.data.brand_users) {
-        //   localStorage.setItem(
-        //     "brands",
-        //     JSON.stringify(response.data.brand_users)
-        //   );
-        // }
+        console.log(decodeToken,"decodeToken")
         dispatch({ type: "SET_AUTH", payload: true });
+        dispatch({ type: "SET_USER", payload: decodeToken });
+
       })
       .catch(function () {
         // manque un message quand c'est une error

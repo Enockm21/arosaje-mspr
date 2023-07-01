@@ -7,7 +7,6 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use PhpParser\Node\Expr\Cast\Array_;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -85,6 +84,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $recipient;
 
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Abonnement::class, mappedBy="user_id")
+     */
+    private $abonnements;
+
+
+
     public function __construct()
     {
         $this->plantes = new ArrayCollection();
@@ -93,6 +100,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->sender = new ArrayCollection();
         $this->recipient = new ArrayCollection();
         $this->adress=new ArrayCollection();
+        $this->abonnements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -377,4 +385,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    
+    /**
+     * @return Collection<int, Abonnement>
+     */
+    public function getAbonnements(): Collection
+    {
+        return $this->abonnements;
+    }
+
+    public function addAbonnement(Abonnement $abonnement): self
+    {
+        if (!$this->abonnements->contains($abonnement)) {
+            $this->abonnements[] = $abonnement;
+            $abonnement->addUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAbonnement(Abonnement $abonnement): self
+    {
+        if ($this->abonnements->removeElement($abonnement)) {
+            $abonnement->removeUserId($this);
+        }
+
+        return $this;
+    }
+
+    
+
+    
 }

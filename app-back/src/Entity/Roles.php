@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\TestRepository;
+use App\Repository\RolesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=TestRepository::class)
+ * @ORM\Entity(repositoryClass=RolesRepository::class)
  */
-class Test
+class Roles
 {
     /**
      * @ORM\Id
@@ -18,23 +18,23 @@ class Test
     private $id;
 
     /**
-     * @ORM\Column(type="blob")
+     * @ORM\Column(type="string", length=255)
      */
-    private $images;
+    private $name;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getImages()
+    public function getName(): ?string
     {
-        return $this->images;
+        return $this->name;
     }
 
-    public function setImages($images): self
+    public function setName(string $name): self
     {
-        $this->images = $images;
+        $this->name = $name;
 
         return $this;
     }

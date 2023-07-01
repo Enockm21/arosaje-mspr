@@ -1,5 +1,7 @@
-import { React, useState, useEffect, useMemo } from "react";
-import { useParams } from "react-router-dom";
+import { React, useState, useEffect ,useContext} from "react";
+import ApiService from "../service/Apiservice";
+import { store } from "../reducer/store";
+
 import {
     Button,
     Input,
@@ -11,10 +13,15 @@ import {
 import { PhotoIcon, XMarkIcon, GlobeAltIcon } from "@heroicons/react/24/outline";
 
 export function NewPlante() {
+    const { dispatch, state } = useContext(store);
 
     let date = new Date();
     const DateToday = date.toISOString().split('T')[0];
-
+    let checkLocation = null;
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+    const [image, setImage] = useState(null);
+    const [showImagePopup, setShowImagePopup] = useState(false);
     const [imageUrl, setImageUrl] = useState('');
 
     const [champs, setChamps] = useState({
@@ -37,7 +44,6 @@ export function NewPlante() {
         location: false
     });
 
-    const [showImagePopup, setShowImagePopup] = useState(false);
 
     const validerChamps = () => {
         let estValide = true;
@@ -78,13 +84,11 @@ export function NewPlante() {
         return estValide;
       };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (validerChamps()) {
-            // Soumettre le formulaire
-        }
-    }
-
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setImage(file);
+    };
+    console.log(state,"state")
     const handleViewImage = () => {
         if (champs.image) {
             const reader = new FileReader();
@@ -111,6 +115,31 @@ export function NewPlante() {
             }));
         } else {
             alert("Prix n'est pas conforme");
+        }
+    }
+    console.log(startDate,endDate,"&za")
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Envoyer le formulaire
+        if (isFormValid) {
+            console.log('Formulaire envoyé');
+          ///  console.log(convertToBase64(image),"convertToBase64(image)")
+            ApiService.request(
+                {
+                specie:name,
+                user:"/api/users/1",
+                description:description,
+                image:image,
+                amount:price,
+                location:location,
+                startDate: startDate,
+                endDate: endDate
+            },
+                 "plantes", "post").then((res)=>{
+
+                console.log(res,"asasa")
+            })
+            
         }
     }
 
@@ -140,6 +169,44 @@ export function NewPlante() {
             alert("Une erreur est survenue. Impossible d'utiliser votre localisation...")
         });
     };
+
+    const handleLocationChange = (location) => {
+        setLocation(location);
+        
+        clearTimeout(checkLocation);
+
+        const url = `https://geocode.maps.co/search?q=${location}`;
+        
+        checkLocation = setTimeout(() => {
+            // fetch(url).then(res => res.json()).then(data => {
+            //     debugger
+            //     if(data.lenght == 1)
+            //     else
+            //         throw new Error();
+            // }).catch((error) => {
+            //     setLocationInvalide(true);
+            // });
+        }, 1000);
+    };
+    const convertToBase64 = (file) => {
+        if(file instanceof Blob){
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+            let base64String= reader.result
+            console.log(base64String,"base64String")
+            setImage(base64String)
+            
+            };
+        reader.onerror = (error) => {
+          console.log("Erreur lors de la conversion en base64 :", error);
+        };
+        }
+        
+      };
+      useEffect(() => {
+       if(image) convertToBase64(image);
+      }, [image]);
 
     useEffect(() => {
         if (champs.location.length > 8) {
@@ -271,8 +338,8 @@ export function NewPlante() {
                         {champs.image && <Typography variant="lead">Nom du fichier : {champs.image.name}</Typography>}
                         {champs.image && <Button onClick={handleViewImage}>Voir l'image</Button>}
                     </div>
-                    <div className="mt-20">
-                        <Button type="submit" ripple={true} color="green">Ajouter</Button>
+                    <div className="text-center mt-20">
+                        <Button ripple={true} color="green" type="submit" disabled={!isFormValid}>Ajouter</Button>
                     </div>
                 </div>
             </form >

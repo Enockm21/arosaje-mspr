@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\User;
 
 class ApiLoginController extends AbstractController
 {
@@ -19,26 +20,13 @@ class ApiLoginController extends AbstractController
 
 
         $user = $this->getUser();
-
         return $this->json([
-            'username'  => $user->getUserIdentifier(),
-            'roles' => $user->getRoles(),
+            'merde'=> "cool"
         ]);
+       /*  return $this->json([
+            'username'  => $user->getUserIdentifier(),
+            'id'  => $userEntity->getId(),
+            'roles' => $user->getRoles(),
+        ]); */
     }
 }
-
-
-//dd($request);
-        // $user=$security->getUser();
-        // if (null === $user) {
-        //  return $this->json([
-        //                    'message' => 'missing credentials',
-        // ], Response::HTTP_UNAUTHORIZED);
-        // }
-        
-        //$token='zeze';
-// return $this->json([
-        //     'user'  => $user->getUserIdentifier(),
-        //     'token' => $token,
-        // ]);
-        // dd($request);

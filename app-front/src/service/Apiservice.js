@@ -19,7 +19,7 @@ const request = async (data, url, method) => {
   var headers = "";
 
     if (localStorage.getItem("arosaje-token")) {
-        console.log("asas",localStorage.getItem("arosaje-token"))
+       // console.log("asas",localStorage.getItem("arosaje-token"))
         headers = {
             Accept: "application/json",
             "Content-Type": "application/json",

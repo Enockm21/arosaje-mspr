@@ -24,7 +24,7 @@ class Plantes
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private $specie;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="plantes")
@@ -70,7 +70,7 @@ class Plantes
     /**
      * @ORM\Column(type="text")
      */
-    private $localisation;
+    private $location;
 
     public function __construct()
     {
@@ -82,14 +82,14 @@ class Plantes
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getSpecie(): ?string
     {
-        return $this->name;
+        return $this->specie;
     }
 
-    public function setName(string $name): self
+    public function setSpecie(string $specie): self
     {
-        $this->name = $name;
+        $this->specie = $specie;
 
         return $this;
     }
@@ -208,14 +208,14 @@ class Plantes
         return $this;
     }
 
-    public function getLocalisation(): ?string
+    public function getLocation(): ?string
     {
-        return $this->localisation;
+        return $this->location;
     }
 
-    public function setLocalisation(string $localisation): self
+    public function setLocation(string $location): self
     {
-        $this->localisation = $localisation;
+        $this->location = $location;
 
         return $this;
     }
