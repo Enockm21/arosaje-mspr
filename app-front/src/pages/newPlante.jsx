@@ -156,12 +156,12 @@ export function NewPlante() {
                     else
                         setChampsInvalides((prevState) => ({
                             ...prevState,
-                            ["location"]: false
+                            ["location"]: true
                         }));
                 }).catch((error) => {
                     setChampsInvalides((prevState) => ({
                         ...prevState,
-                        ["location"]: false
+                        ["location"]: true
                     }));
                     console.log(error);
                 });
@@ -190,7 +190,7 @@ export function NewPlante() {
                         id="name"
                         color="green"
                         value={champs.name}
-                        onChange={(e) => handleChangeChamp('name', e.target.value.trim())}
+                        onChange={(e) => handleChangeChamp('name', e.target.value)}
                         label="Nom"
                         error={champsInvalides.name}
                     />
@@ -199,7 +199,7 @@ export function NewPlante() {
                             id="description"
                             color="green"
                             value={champs.description}
-                            onChange={(e) => handleChangeChamp('description', e.target.value.trim())}
+                            onChange={(e) => handleChangeChamp('description', e.target.value)}
                             label="Description"
                             rows={10}
                             error={champsInvalides.description}

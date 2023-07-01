@@ -50,6 +50,10 @@
         "twig/twig": "^2.12|^3.0"
     },
     "config": {
+        "platform-check": false,
+        "platform": {
+            "php": "7.4.21"
+        },
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
             "symfony/flex": true,
