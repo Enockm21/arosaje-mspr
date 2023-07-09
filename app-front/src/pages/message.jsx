@@ -11,7 +11,7 @@ const DiscussionPage = () => {
       const message = {
         id: messages.length + 1,
         content: newMessage,
-        sender: 'You', // Remplacez par votre nom ou nom d'utilisateur
+        sender: 'Vous', // Remplacez par votre nom ou nom d'utilisateur
         receiver: selectedFriend,
         timestamp: new Date().toLocaleString() // Ajoutez un horodatage au message
       };
@@ -22,34 +22,26 @@ const DiscussionPage = () => {
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'entrer') {
       sendMessage();
     }
   };
 
   const friendsList = [
-    'John',
-    'Emma',
-    'Michael',
+    'Carla',
+    'Paul',
+    'charles',
     'Sophia',
-    'William',
-    'Olivia',
-    'James',
-    'Ava',
+    'Eric',
+    'Thomas',
+    'Alexi',
+    'Lola',
     'Alexander',
-    'Mia',
     'Daniel',
     'Charlotte',
     'David',
-    'Emily',
     'Joseph',
-    'Amelia',
-    'Matthew',
-    'Abigail',
-    'Andrew',
-    'Harper',
     'Benjamin',
-    'Ella'
   ]; // Remplacez par de vrais noms d'amis ou d'utilisateurs
 
   const handleFriendClick = (friend) => {
@@ -92,15 +84,15 @@ const DiscussionPage = () => {
           </div>
         )}
         <div className="discussion-input">
-          {selectedFriend && <div className="selected-friend">Sending message to: {selectedFriend}</div>}
+          {selectedFriend && <div className="selected-friend">Envoi d'un message à: {selectedFriend}</div>}
           <input
             type="text"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Write your message..."
+            placeholder="Rédigez votre message..."
           />
-          <button className="send-button" onClick={sendMessage}>Send</button>
+          <button className="entrer-button" onClick={sendMessage}>entrer</button>
         </div>
       </div>
     </div>
